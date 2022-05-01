@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require_relative './compiled_artifact'
 require_relative './concept'
 require_relative './phrase'
 require_relative './relationship'
@@ -22,10 +23,10 @@ class SimpleCompilationEngine
     concepts = []
     while !prose_words.nil? && prose_words.any?
       concept, prose_words = parse_concept(prose_words)
-      concepts.append(concept) if !concept.nil?
+      concepts.append(concept) unless concept.nil?
     end
 
-    concepts
+    CompiledArtifact.new concepts
   end
 
   def parse_concept(prose_words)
