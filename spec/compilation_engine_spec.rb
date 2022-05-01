@@ -3,16 +3,14 @@
 require_relative '../lib/compilation_engine'
 
 describe CompilationEngine do
-  context 'lexes' do
+  context 'phase_0' do
     it 'works on empty string' do
-      expect(CompilationEngine.new.lex('')).to match_array([])
+      expect(CompilationEngine.new.phase_0('')).to match_array([])
     end
-    it 'does not drop punctuation' do
-      some_prose = "This is a sentence with, dare I say, some snarky prose'd-up text!"
-      expect(CompilationEngine.new.lex(some_prose)).to match_array(
-        ['This', 'is', 'a', 'sentence', 'with', ',',
-         'dare', 'I', 'say', ',', 'some', 'snarky',
-         "prose'd-up", 'text', '!']
+    it 'eliminates punctuation' do
+      some_prose = 'This is a sentence with, dare I say, some snarky prose text!'
+      expect(CompilationEngine.new.phase_0(some_prose)).to match_array(
+        %w[This is a sentence with dare I say some snarky prose text]
       )
     end
   end
